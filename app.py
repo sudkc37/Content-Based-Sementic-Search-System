@@ -4,7 +4,7 @@ import requests
 
 
 def get_poster(id):
-    url = "https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US".format(id)
+    url = "https://api.themoviedb.org/3/movie/{}?api_key="your api"&language=en-US".format(id)
     response = requests.get(url)
     response = response.json()
     poster_path = response['poster_path']
