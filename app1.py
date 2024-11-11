@@ -16,7 +16,7 @@ def zip_filter(a, b):
     return zip(a, b)
 
 def get_poster(id):
-    url = f"https://api.themoviedb.org/3/movie/{id}?api_key=5c95d31c93eda9617b602d650a5379ec&language=en-US"
+    url = f"https://api.themoviedb.org/3/movie/{id}?api_key= your api &language=en-US"
     response = requests.get(url).json()
     poster_path = response.get('poster_path', '')
     return f"https://image.tmdb.org/t/p/w500/{poster_path}" if poster_path else ""
