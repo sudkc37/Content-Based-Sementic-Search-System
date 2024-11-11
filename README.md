@@ -9,7 +9,8 @@ For the UI, when the user opens the app, the system initially provides random su
 
 ## Ideal State:
 
-<img width="778" alt="Screenshot 2024-11-04 at 9 04 41 PM" src="https://github.com/user-attachments/assets/72a951a7-f7d3-4755-bba2-cf219cb44227">
+![image](https://github.com/user-attachments/assets/2d7dd0c3-9842-42f4-96ea-0ac912d8a01c)
+
 
 ## Reterived Suggestion:
 
