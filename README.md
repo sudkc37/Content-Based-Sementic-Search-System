@@ -14,4 +14,5 @@ For the UI, when the user opens the app, the system initially provides random su
 
 ## Reterived Suggestion:
 
-<img width="778" alt="Screenshot 2024-11-04 at 9 09 43 PM" src="https://github.com/user-attachments/assets/0513d8c4-73d6-40e2-a758-ce12b5317be6">
+![image](https://github.com/user-attachments/assets/2ed5345a-3048-4482-a2df-b22c1937d793)
+
