@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Movie Page</title>
+    <style>
+        /* Set background color to black and text color to white */
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Position buttons in the top right */
+        #top-buttons {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        #top-buttons button {
+            margin-left: 5px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* User icon styling */
+        #user-menu {
+            margin-left: 5px;
+            cursor: pointer;
+        }
+
+        #user-menu img {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+        }
+
+        /* Dropdown menu styling */
+        .dropdown {
+            display: none;
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            background-color: #333;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .dropdown a {
+            display: block;
+            color: white;
+            padding: 5px 10px;
+            text-decoration: none;
+        }
+
+        .dropdown a:hover {
+            background-color: #555;
+        }
+
+        /* Grid layout to display four movies per row */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .movie-item {
+            text-align: center;
+        }
+
+        /* Center the about message at the bottom and make it full width */
+        #about-message {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background-color: #222;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%; /* Full-width display */
+        }
+    </style>
+    <script>
+        let displayedMovies = 20; // Initial number of movies to display
+        const increment = 8; // Number of movies to add each time "More" is clicked
+
+        // Function to show the movie selection dropdown when the search button is clicked
+        function showMovieSelection() {
+            document.getElementById('movie-selection').style.display = 'block';
+        }
+
+        // Function to load the home page or random recommendations
+        function goToHome() {
+            location.reload(); // Reload page to reset and show initial recommendations
+        }
+
+        // Function to load more recommendations
+        function loadMoreRecommendations() {
+            const movieItems = document.querySelectorAll('.movie-item');
+            for (let i = displayedMovies; i < displayedMovies + increment && i < movieItems.length; i++) {
+                movieItems[i].style.display = 'block'; // Show next batch of movies
+            }
+            displayedMovies += increment;
+            // Hide the "More" button if all movies are displayed
+            if (displayedMovies >= movieItems.length) {
+                document.getElementById('more-button').style.display = 'none';
+            }
+        }
+
+        // Function to initialize the display of movies on page load
+        function initializeMovies() {
+            const movieItems = document.querySelectorAll('.movie-item');
+            movieItems.forEach((item, index) => {
+                item.style.display = index < displayedMovies ? 'block' : 'none';
+            });
+        }
+
+        // Function to show the about message at the bottom and scroll to it
+        function showAbout() {
+            const aboutMessage = document.getElementById('about-message');
+            aboutMessage.style.display = 'block';
+            aboutMessage.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+
+        // Function to toggle user dropdown menu
+        function toggleUserMenu() {
+            const dropdown = document.getElementById('user-dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        window.onload = initializeMovies;
+    </script>
+</head>
+<body>
+    <!-- Custom SVG header -->
+    <svg width="530" height="200" ">
+      <!-- Background for the tape -->
+      <rect x="0" y="0" width="400" height="80" fill="#333" rx="10" ry="10" />
+      
+      <!-- Reels on the sides -->
+      <circle cx="35" cy="40" r="18" fill="lightblue" />
+      <circle cx="362" cy="40" r="18" fill="lightblue" />
+      
+      <!-- Text -->
+      <text x="200" y="50" font-size="24" text-anchor="middle" fill="white">
+        yourF@vouriteMovies.com
+      </text>
+    </svg>
+
+    <!-- Top right corner buttons for navigation -->
+    <div id="top-buttons">
+        <button type="button" onclick="goToHome()">Home</button>
+        <button type="button" onclick="showMovieSelection()">Search</button>
+        <button type="button" onclick="showAbout()">About</button>
+        
+        <!-- User icon for login/signup options -->
+        <div id="user-menu" onclick="toggleUserMenu()">
+            <img src="/Users/sudipkhadka/Desktop/Content-Based-Recommendation-System/templates/user.png" alt="User Icon">
+        </div>
+    </div>
+
+    <!-- User dropdown menu -->
+    <div id="user-dropdown" class="dropdown">
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+    </div>
+
+    <!-- "Select a Movie" dropdown -->
+    <div id="movie-selection" style="display: none;">
+        <form method="POST">
+            <select name="movie" id="movie">
+                <option value="">--Select--</option>
+                {% for movie in movie_list %}
+                    <option value="{{ movie }}">{{ movie }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show</button>
+        </form>
+    </div>
+
+    <!-- Movie recommendations in a grid layout -->
+    <div class="movie-grid">
+        {% for movie, poster in movies|zip(posters) %}
+            <div class="movie-item">
+                <h3>{{ movie }}</h3>
+                <img src="{{ poster }}" alt="Poster for {{ movie }}" style="width: 200px; height: auto;">
+            </div>
+        {% endfor %}
+    </div>
+
+    <!-- "More" button -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button id="more-button" type="button" onclick="loadMoreRecommendations()">More</button>
+    </div>
+
+    <!-- "About" message -->
+    <div id="about-message">
+        <p>Your ultimate destination for streaming movies, TV shows, and exclusive content. Whatever you're in the mood for—action, drama, comedy, or documentaries—we've got something for everyone.</p>
+        <p><strong>Why Choose yourFavouriteMovies.com?</strong><br>
+        We strive to bring you the best entertainment experience with high-quality streaming, intuitive navigation, and a commitment to continuously adding fresh content.</p>
+        <p>Start your journey today and dive into a world of endless entertainment!</p>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
