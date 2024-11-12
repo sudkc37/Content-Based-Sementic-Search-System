@@ -11,6 +11,10 @@ For the UI, when the user opens the app, the system initially provides random su
 
 ![image](https://github.com/user-attachments/assets/2d7dd0c3-9842-42f4-96ea-0ac912d8a01c)
 
+## After Login
+![image](https://github.com/user-attachments/assets/546ccf57-1586-4b6a-8abf-8c3773cf2c15)
+
+
 
 ## Reterived Suggestion:
 
